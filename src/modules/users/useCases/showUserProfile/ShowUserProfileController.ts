@@ -8,9 +8,15 @@ class ShowUserProfileController {
   handle(request: Request, response: Response): Response {
     const { user_id } = request.params
 
-    const listUser = this.showUserProfileUseCase.execute({ user_id });
+    try {
 
-    return response.json(listUser);
+      const listUser = this.showUserProfileUseCase.execute({ user_id });
+
+      return response.json(listUser);
+    } catch (err) {
+      return response.status(404).json({ error: err.message })
+    }
+
   }
 }
 
